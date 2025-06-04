@@ -1,4 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using MusicApi.Services;
+using MusicProjectShared.Entities;
+using MusicProjectShared.Entities.Dto_s;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -8,36 +11,36 @@ namespace MusicApi.Controllers
     [ApiController]
     public class MusicController : ControllerBase
     {
-        // GET: api/<MusicController>
-        [HttpGet]
-        public IEnumerable<string> Get()
+
+        private readonly IMusicService _musicService;
+
+        public MusicController(IMusicService musicService)
         {
-            return new string[] { "value1", "value2" };
+            _musicService = musicService;
         }
 
-        // GET api/<MusicController>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
+        [HttpGet("GetMusicList")]
+        public async Task<List<Music>> GetMusicList()
         {
-            return "value";
+            return await _musicService.GetMusicList();
         }
 
-        // POST api/<MusicController>
-        [HttpPost]
-        public void Post([FromBody] string value)
+        [HttpGet("GetMusic/{id}")]
+        public async Task<Music> GetMusic(int id)
         {
+            return await _musicService.GetMusic(id);
         }
 
-        // PUT api/<MusicController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        [HttpPost("AddMusic")]
+        public async Task AddMusic([FromBody] MusicAddDto musicAdd)
         {
+            await _musicService.AddMusicAsync(musicAdd);
         }
 
-        // DELETE api/<MusicController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
+        [HttpDelete("DeleteMusic/{id}")]
+        public async Task Delete(int id)
         {
+            await _musicService.DeleteMusicAsync(id);
         }
     }
 }

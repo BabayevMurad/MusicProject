@@ -1,6 +1,14 @@
-﻿namespace MusicApi.Services
+﻿using MusicProjectShared.Entities;
+using MusicProjectShared.Entities.Dto_s;
+
+namespace MusicApi.Services
 {
     public interface IMusicService
     {
+        Task AddMusicAsync(MusicAddDto music);
+        Task DeleteMusicAsync(int id);
+        Task<Music> GetMusic(int id);
+        Task<List<Music>> GetMusicList();
+
     }
 }
