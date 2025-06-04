@@ -1,0 +1,65 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.14.36109.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ApiGateway", "ApiGateway", "{02EA681E-C7D8-13C7-8484-4AC65E1B71E8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ApiGateway", "ApiGateway\ApiGateway.csproj", "{BF05364C-D6FD-476F-9885-F1CE9E508E83}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MusicApi", "MusicApi", "{58E90EBC-2004-4EFD-96C5-34645F700B46}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MusicApi", "MusicApi\MusicApi.csproj", "{7EC2F36B-FF82-418C-BC71-B578013E2F16}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "AuthApi", "AuthApi", "{61AF7B53-27F0-4F5A-B4D4-3FC24F4198A0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AuthApi", "AuthApi\AuthApi.csproj", "{BCA724FB-3BD7-46FA-9557-904EC19A5263}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MusicUi", "MusicUi", "{E3AC57EA-C00A-4F65-9635-5E16D86DC2EB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MusicProjectShared", "MusicProjectShared\MusicProjectShared.csproj", "{305328E4-7C53-4E91-BA19-2FF52D7B4544}"
+EndProject
+Project("{54A90642-561A-4BB1-A94E-469ADEE60C69}") = "musicui", "MusicUi\musicui.esproj", "{33EABB39-F75C-FDBD-C7BE-0F46E353E141}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{BF05364C-D6FD-476F-9885-F1CE9E508E83}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BF05364C-D6FD-476F-9885-F1CE9E508E83}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BF05364C-D6FD-476F-9885-F1CE9E508E83}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BF05364C-D6FD-476F-9885-F1CE9E508E83}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7EC2F36B-FF82-418C-BC71-B578013E2F16}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7EC2F36B-FF82-418C-BC71-B578013E2F16}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7EC2F36B-FF82-418C-BC71-B578013E2F16}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7EC2F36B-FF82-418C-BC71-B578013E2F16}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BCA724FB-3BD7-46FA-9557-904EC19A5263}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BCA724FB-3BD7-46FA-9557-904EC19A5263}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BCA724FB-3BD7-46FA-9557-904EC19A5263}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BCA724FB-3BD7-46FA-9557-904EC19A5263}.Release|Any CPU.Build.0 = Release|Any CPU
+		{305328E4-7C53-4E91-BA19-2FF52D7B4544}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{305328E4-7C53-4E91-BA19-2FF52D7B4544}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{305328E4-7C53-4E91-BA19-2FF52D7B4544}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{305328E4-7C53-4E91-BA19-2FF52D7B4544}.Release|Any CPU.Build.0 = Release|Any CPU
+		{33EABB39-F75C-FDBD-C7BE-0F46E353E141}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{33EABB39-F75C-FDBD-C7BE-0F46E353E141}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{33EABB39-F75C-FDBD-C7BE-0F46E353E141}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{33EABB39-F75C-FDBD-C7BE-0F46E353E141}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{33EABB39-F75C-FDBD-C7BE-0F46E353E141}.Release|Any CPU.Build.0 = Release|Any CPU
+		{33EABB39-F75C-FDBD-C7BE-0F46E353E141}.Release|Any CPU.Deploy.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{BF05364C-D6FD-476F-9885-F1CE9E508E83} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
+		{7EC2F36B-FF82-418C-BC71-B578013E2F16} = {58E90EBC-2004-4EFD-96C5-34645F700B46}
+		{BCA724FB-3BD7-46FA-9557-904EC19A5263} = {61AF7B53-27F0-4F5A-B4D4-3FC24F4198A0}
+		{33EABB39-F75C-FDBD-C7BE-0F46E353E141} = {E3AC57EA-C00A-4F65-9635-5E16D86DC2EB}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {262270E7-6B5F-4A95-AE57-8CCF5285FB9B}
+	EndGlobalSection
+EndGlobal
