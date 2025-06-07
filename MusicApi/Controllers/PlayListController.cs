@@ -38,7 +38,7 @@ namespace MusicApi.Controllers
             {
                 Name = playListAdd.Name,
                 UserId = playListAdd.UserId,
-                
+
             };
 
             await _playList.AddPlayListAsync(playList);
@@ -61,6 +61,18 @@ namespace MusicApi.Controllers
         public async Task DeletePlaylist(int id)
         {
             await _playList.DeletePlayListAsync(id);
+        }
+
+        [HttpPost("AddMusicToPlaylist")]
+        public async Task AddMusicToPlaylist([FromBody] AddMusicDto addMusic)
+        {
+            await _playList.AddMusicToPlaylist(addMusic.PlaylistId, addMusic.MusicId);
+        }
+
+        [HttpDelete("RemoveMusicToPlaylist")]
+        public async Task RemoveMusicToPlaylist([FromBody] AddMusicDto addMusic)
+        {
+            await _playList.RemoveMusicToPlaylist(addMusic.PlaylistId, addMusic.MusicId);
         }
     }
 }

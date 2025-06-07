@@ -2,8 +2,8 @@
 import { useState } from "react"
 import axios from "axios";
 
-const API_LOGIN = "https://localhost:7243/auth/register";
-const API_REGISTER = "https://localhost:7243/auth/login";
+const API_REGISTER = "https://localhost:7243/auth/register";
+const API_LOGIN = "https://localhost:7243/auth/login";
 function RegisterLogin() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");

@@ -155,7 +155,32 @@
       ],
       "UpstreamPathTemplate": "/playlist/delete/{id}",
       "UpstreamHttpMethod": [ "DELETE" ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/PlayList/AddMusicToPlaylist",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 7077
+        }
+      ],
+      "UpstreamPathTemplate": "/playlist/addMusic",
+      "UpstreamHttpMethod": [ "POST" ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/PlayList/RemoveMusicToPlaylist",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 7077
+        }
+      ],
+      "UpstreamPathTemplate": "/playlist/removeMusic",
+      "UpstreamHttpMethod": [ "DELETE" ]
     }
+
   ],
   "GlobalConfiguration": {
     "BaseUrl": "https://localhost:7243"

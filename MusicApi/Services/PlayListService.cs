@@ -42,7 +42,37 @@ namespace MusicApi.Services
         public async Task UpdatePlayListAsync(PlayList playList)
         {
             _context.PlayLists.Update(playList);
-           await _context.SaveChangesAsync();
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task AddMusicToPlaylist(int PlaylistId, int MusicId)
+        {
+            var playlist = await _context.PlayLists.Include(p => p.Musics)
+                .FirstOrDefaultAsync(p => p.Id == PlaylistId);
+            if (playlist != null)
+            {
+                var music = await _context.Musics.FindAsync(MusicId);
+                if (music != null && !playlist.Musics.Contains(music))
+                {
+                    playlist.Musics.Add(music);
+                    await _context.SaveChangesAsync();
+                }
+            }
+        }
+
+        public async Task RemoveMusicToPlaylist(int PlaylistId, int MusicId)
+        {
+            var playlist = await _context.PlayLists.Include(p => p.Musics)
+                .FirstOrDefaultAsync(p => p.Id == PlaylistId);
+            if (playlist != null)
+            {
+                var music = await _context.Musics.FindAsync(MusicId);
+                if (music != null && !playlist.Musics.Contains(music))
+                {
+                    playlist.Musics.Remove(music);
+                    await _context.SaveChangesAsync();
+                }
+            }
         }
     }
 }

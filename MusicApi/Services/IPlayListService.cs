@@ -9,5 +9,7 @@ namespace MusicApi.Services
         Task AddPlayListAsync(PlayList playList);
         Task DeletePlayListAsync(int id);
         Task UpdatePlayListAsync(PlayList playList);
+        Task AddMusicToPlaylist(int PlaylistId, int MusicId);
+        Task RemoveMusicToPlaylist(int PlaylistId, int MusicId);
     }
 }
