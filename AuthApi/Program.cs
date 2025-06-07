@@ -41,6 +41,14 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         };
     });
 
+builder.Services.AddCors(p => p.AddPolicy("corsapp", builder =>
+{
+    builder.WithOrigins("http://localhost:57725")
+           .AllowAnyHeader()
+           .AllowAnyMethod()
+           .AllowCredentials();
+}));
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -51,6 +59,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseCors("corsapp");
 
 app.UseAuthorization();
 

@@ -1,4 +1,5 @@
 using Ocelot.DependencyInjection;
+using Ocelot.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -23,7 +24,7 @@ builder.Services.AddOcelot(configuration);
 
 builder.Services.AddCors(p => p.AddPolicy("corsapp", builder =>
 {
-    builder.WithOrigins("http://localhost:5000")
+    builder.WithOrigins("http://localhost:57725")
            .AllowAnyHeader()
            .AllowAnyMethod()
            .AllowCredentials();
@@ -45,5 +46,7 @@ app.UseCors("corsapp");
 app.UseAuthorization();
 
 app.MapControllers();
+
+await app.UseOcelot();
 
 app.Run();
