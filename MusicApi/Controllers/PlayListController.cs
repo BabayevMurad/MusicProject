@@ -44,16 +44,15 @@ namespace MusicApi.Controllers
             await _playList.AddPlayListAsync(playList);
         }
 
-        // PUT api/<PlayListController>/5
-        [HttpPut("PlayListChange/{id}")]
-        public async Task PlayListChange(int id, [FromBody] PlayListChangeDto playListChange)
+        [HttpPatch("PlayListChange/{id}")]
+        public async Task<IActionResult> PatchPlayListName(int id, [FromBody] PlayListPatchDto dto)
         {
-            await _playList.UpdatePlayListAsync(new PlayList
-            {
-                UserId = playListChange.UserId,
-                Name = playListChange.Name,
-                Musics = playListChange.Musics
-            });
+            var success = await _playList.UpdatePlayListNameAsync(id, dto.Name);
+
+            if (!success)
+                return NotFound();
+
+            return Ok();
         }
 
         // DELETE api/<PlayListController>/5

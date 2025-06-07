@@ -142,7 +142,7 @@
         }
       ],
       "UpstreamPathTemplate": "/playlist/update/{id}",
-      "UpstreamHttpMethod": [ "PUT" ]
+      "UpstreamHttpMethod": [ "PATCH" ]
     },
     {
       "DownstreamPathTemplate": "/api/PlayList/DeletePlaylist/{id}",

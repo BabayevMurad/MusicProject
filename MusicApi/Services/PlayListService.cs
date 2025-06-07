@@ -41,11 +41,17 @@ namespace MusicApi.Services
             return await _context.PlayLists.FirstOrDefaultAsync(p => p.Id == id);
         }
 
-        public async Task UpdatePlayListAsync(PlayList playList)
+        public async Task<bool> UpdatePlayListNameAsync(int id, string newName)
         {
-            _context.PlayLists.Update(playList);
+            var playlist = await _context.PlayLists.FirstOrDefaultAsync(p => p.Id == id);
+            if (playlist == null)
+                return false;
+
+            playlist.Name = newName;
             await _context.SaveChangesAsync();
+            return true;
         }
+
 
         public async Task AddMusicToPlaylist(int PlaylistId, int MusicId)
         {
