@@ -18,7 +18,7 @@ namespace MusicApi.Controllers
         {
             _musicService = musicService;
         }
-
+        
         [HttpGet("GetMusicList")]
         public async Task<List<Music>> GetMusicList()
         {

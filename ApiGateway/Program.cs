@@ -1,4 +1,11 @@
+using Ocelot.DependencyInjection;
+
 var builder = WebApplication.CreateBuilder(args);
+
+//builder.WebHost.ConfigureKestrel(options =>
+//{
+//    options.ListenAnyIP(5000);
+//});
 
 // Add services to the container.
 
@@ -6,6 +13,21 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+
+IConfiguration configuration = new ConfigurationBuilder()
+    .AddJsonFile("ocelot.json")
+    .Build();
+
+builder.Services.AddOcelot(configuration);
+
+builder.Services.AddCors(p => p.AddPolicy("corsapp", builder =>
+{
+    builder.WithOrigins("http://localhost:5000")
+           .AllowAnyHeader()
+           .AllowAnyMethod()
+           .AllowCredentials();
+}));
 
 var app = builder.Build();
 
@@ -17,6 +39,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseCors("corsapp");
 
 app.UseAuthorization();
 

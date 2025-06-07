@@ -20,7 +20,8 @@ namespace MusicApi.Services
             {
                 Name = music.Name,
                 PosterUrl = music.PosterUrl,
-                MusicUrl = music.MusicUrl
+                MusicUrl = music.MusicUrl,
+                UserId = music.UserId
             };
 
             var musicReturn = await _context.Musics.AddAsync(newMusic);
@@ -30,11 +31,18 @@ namespace MusicApi.Services
 
         public async Task DeleteMusicAsync(int id)
         {
-            var music = await _context.Musics.FirstOrDefaultAsync(m => m.Id == id);
+            var music = await _context.Musics
+                .Include(m => m.PlayLists)
+                .FirstOrDefaultAsync(m => m.Id == id);
 
-            _context.Musics.Remove(music);
+            if (music != null)
+            {
+                music.PlayLists?.Clear();
 
-            await _context.SaveChangesAsync();
+                _context.Musics.Remove(music);
+
+                await _context.SaveChangesAsync();
+            }
         }
 
         public async Task<Music> GetMusic(int id)
