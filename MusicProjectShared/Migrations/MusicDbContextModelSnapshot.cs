@@ -148,7 +148,7 @@ namespace MusicProjectShared.Migrations
                     b.HasOne("MusicProjectShared.Entities.PlayList", null)
                         .WithMany()
                         .HasForeignKey("PlayListId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
                         .HasConstraintName("FK_PlayListMusics_PlayList_PlayListId");
                 });

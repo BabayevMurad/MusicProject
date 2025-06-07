@@ -31,28 +31,28 @@ namespace MusicProjectShared.Data
 
             // Many-to-many PlayList <-> Music with Restrict delete behavior on FKs
             modelBuilder.Entity<PlayList>()
-                .HasMany(p => p.Musics)
-                .WithMany(m => m.PlayLists)
-                .UsingEntity<Dictionary<string, object>>(
-                    "PlayListMusics",
-                    j => j
-                        .HasOne<Music>()
-                        .WithMany()
-                        .HasForeignKey("MusicId")
-                        .HasConstraintName("FK_PlayListMusics_Music_MusicId")
-                        .OnDelete(DeleteBehavior.Restrict),
-                    j => j
-                        .HasOne<PlayList>()
-                        .WithMany()
-                        .HasForeignKey("PlayListId")
-                        .HasConstraintName("FK_PlayListMusics_PlayList_PlayListId")
-                        .OnDelete(DeleteBehavior.Restrict),
-                    j =>
-                    {
-                        j.HasKey("PlayListId", "MusicId");
-                        j.ToTable("PlayListMusics");
-                    });
+            .HasMany(p => p.Musics)
+            .WithMany(m => m.PlayLists)
+            .UsingEntity<Dictionary<string, object>>(
+                "PlayListMusics",
+                j => j
+                    .HasOne<Music>()
+                    .WithMany()
+                    .HasForeignKey("MusicId")
+                    .HasConstraintName("FK_PlayListMusics_Music_MusicId")
+                    .OnDelete(DeleteBehavior.Restrict), // Music silinərkən qorunsun
+                j => j
+                    .HasOne<PlayList>()
+                    .WithMany()
+                    .HasForeignKey("PlayListId")
+                    .HasConstraintName("FK_PlayListMusics_PlayList_PlayListId")
+                    .OnDelete(DeleteBehavior.Cascade), // Playlist silinərkən əlaqələr silinsin
+                j =>
+                {
+                    j.HasKey("PlayListId", "MusicId");
+                    j.ToTable("PlayListMusics");
+                }
+            );
         }
-
     }
 }

@@ -11,7 +11,7 @@ using MusicProjectShared.Data;
 namespace MusicProjectShared.Migrations
 {
     [DbContext(typeof(MusicDbContext))]
-    [Migration("20250607173323_init")]
+    [Migration("20250607215340_init")]
     partial class init
     {
         /// <inheritdoc />
@@ -151,7 +151,7 @@ namespace MusicProjectShared.Migrations
                     b.HasOne("MusicProjectShared.Entities.PlayList", null)
                         .WithMany()
                         .HasForeignKey("PlayListId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
                         .HasConstraintName("FK_PlayListMusics_PlayList_PlayListId");
                 });

@@ -24,9 +24,11 @@ namespace MusicApi.Services
         {
             var playlist = await _context.PlayLists.FirstOrDefaultAsync(p => p.Id == id);
 
-            _context.PlayLists.Remove(playlist!);
-
-            await _context.SaveChangesAsync();
+            if (playlist != null)
+            {
+                _context.PlayLists.Remove(playlist);
+                await _context.SaveChangesAsync();
+            }
         }
 
         public async Task<List<PlayList>> GetListPlaylistAsync()

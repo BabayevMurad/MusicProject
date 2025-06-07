@@ -129,7 +129,7 @@
           "Port": 7077
         }
       ],
-      "UpstreamPathTemplate": "/playlist/playListunique/add",
+      "UpstreamPathTemplate": "/playlist/add",
       "UpstreamHttpMethod": [ "POST" ]
     },
     {
