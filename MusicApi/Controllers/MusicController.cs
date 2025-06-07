@@ -35,8 +35,6 @@ namespace MusicApi.Controllers
         public async Task AddMusic([FromBody] MusicAddDto musicAdd)
         {
             await _musicService.AddMusicAsync(musicAdd);
-
-
         }
 
         [HttpDelete("DeleteMusic/{id}")]
