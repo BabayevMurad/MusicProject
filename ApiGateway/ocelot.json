@@ -117,7 +117,7 @@
           "Port": 7077
         }
       ],
-      "UpstreamPathTemplate": "/playlist/{id}",
+      "UpstreamPathTemplate": "/playlist/GetPlaylist/{id}",
       "UpstreamHttpMethod": [ "GET" ]
     },
     {
@@ -129,7 +129,7 @@
           "Port": 7077
         }
       ],
-      "UpstreamPathTemplate": "/playlist/add",
+      "UpstreamPathTemplate": "/playlist/playListunique/add",
       "UpstreamHttpMethod": [ "POST" ]
     },
     {
@@ -179,8 +179,19 @@
       ],
       "UpstreamPathTemplate": "/playlist/removeMusic",
       "UpstreamHttpMethod": [ "DELETE" ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/PlayList/GetMusicsByPlayList/{id}",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 7077
+        }
+      ],
+      "UpstreamPathTemplate": "/playlist/getMusicByList/{id}",
+      "UpstreamHttpMethod": [ "GET" ]
     }
-
   ],
   "GlobalConfiguration": {
     "BaseUrl": "https://localhost:7243"

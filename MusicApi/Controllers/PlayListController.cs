@@ -74,5 +74,11 @@ namespace MusicApi.Controllers
         {
             await _playList.RemoveMusicToPlaylist(addMusic.PlaylistId, addMusic.MusicId);
         }
+
+        [HttpGet("GetMusicsByPlayList/{id}")]
+        public async Task<List<Music>> GetMusicsByPlayList(int id)
+        {
+            return await _playList.GetMusicsByPlayList(id);
+        }
     }
 }

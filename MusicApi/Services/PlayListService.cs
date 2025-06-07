@@ -74,5 +74,12 @@ namespace MusicApi.Services
                 }
             }
         }
+
+        public async Task<List<Music>> GetMusicsByPlayList(int id)
+        {
+            var playlist = await _context.PlayLists.Include(p => p.Musics).FirstOrDefaultAsync(p => p.Id == id);
+
+            return playlist!.Musics;
+        } 
     }
 }

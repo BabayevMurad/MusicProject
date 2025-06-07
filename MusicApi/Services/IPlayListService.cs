@@ -11,5 +11,6 @@ namespace MusicApi.Services
         Task UpdatePlayListAsync(PlayList playList);
         Task AddMusicToPlaylist(int PlaylistId, int MusicId);
         Task RemoveMusicToPlaylist(int PlaylistId, int MusicId);
+        Task<List<Music>> GetMusicsByPlayList(int id);
     }
 }
