@@ -11,7 +11,7 @@ using MusicProjectShared.Data;
 namespace MusicProjectShared.Migrations
 {
     [DbContext(typeof(MusicDbContext))]
-    [Migration("20250607083612_init")]
+    [Migration("20250607110117_init")]
     partial class init
     {
         /// <inheritdoc />

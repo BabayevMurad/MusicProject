@@ -9,7 +9,6 @@ namespace MusicProjectShared.Data
         {
             var optionsBuilder = new DbContextOptionsBuilder<MusicDbContext>();
 
-            // 👉 Replace this connection string with your actual local SQL Server setup
             optionsBuilder.UseSqlServer("Data Source=(localdb)\\ProjectModels;Initial Catalog=MusicProjectDb;Integrated Security=True;Connect Timeout=30;Encrypt=False;Trust Server Certificate=False;Application Intent=ReadWrite;Multi Subnet Failover=False");
 
             return new MusicDbContext(optionsBuilder.Options);

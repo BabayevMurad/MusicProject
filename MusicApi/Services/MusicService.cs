@@ -29,6 +29,15 @@ namespace MusicApi.Services
             await _context.SaveChangesAsync();
         }
 
+        public async Task LikeMusic(int id)
+        {
+            var music = await _context.Musics.FirstOrDefaultAsync(m => m.Id == id);
+
+            music!.LikeCount = music.LikeCount+1;
+
+            await _context.SaveChangesAsync();
+        }
+
         public async Task DeleteMusicAsync(int id)
         {
             var music = await _context.Musics
@@ -53,6 +62,22 @@ namespace MusicApi.Services
         public async Task<List<Music>> GetMusicList()
         {
             return await _context.Musics.ToListAsync();
+        }
+
+        public async Task UnLikeMusic(int id)
+        {
+            var music = await _context.Musics.FirstOrDefaultAsync(m => m.Id == id);
+
+            if (music.LikeCount!=0)
+            {
+                music!.LikeCount = music.LikeCount - 1;
+            }
+            else
+            {
+                music!.LikeCount = 0;
+            }
+
+            await _context.SaveChangesAsync();
         }
     }
 }

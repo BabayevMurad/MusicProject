@@ -18,7 +18,7 @@ namespace MusicApi.Controllers
         {
             _musicService = musicService;
         }
-        
+
         [HttpGet("GetMusicList")]
         public async Task<List<Music>> GetMusicList()
         {
@@ -35,12 +35,26 @@ namespace MusicApi.Controllers
         public async Task AddMusic([FromBody] MusicAddDto musicAdd)
         {
             await _musicService.AddMusicAsync(musicAdd);
+
+
         }
 
         [HttpDelete("DeleteMusic/{id}")]
         public async Task Delete(int id)
         {
             await _musicService.DeleteMusicAsync(id);
+        }
+
+        [HttpPost("LikeMusic/{id}")]
+        public async Task LikeMusic(int id)
+        {
+            await _musicService.LikeMusic(id);
+        }
+
+        [HttpPost("UnLikeMusic/{id}")]
+        public async Task UnLikeMusic(int id)
+        {
+            await _musicService.UnLikeMusic(id);
         }
     }
 }

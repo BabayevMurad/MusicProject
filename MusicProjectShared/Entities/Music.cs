@@ -8,6 +8,7 @@
         public string MusicUrl { get; set; }
         public virtual User? User { get; set; }
         public int UserId { get; set; }
+        public int LikeCount { get; set; }
         public virtual List<PlayList> PlayLists { get; set; }
     }
 }
