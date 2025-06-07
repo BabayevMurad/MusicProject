@@ -80,6 +80,11 @@ namespace MusicApi.Services
             var playlist = await _context.PlayLists.Include(p => p.Musics).FirstOrDefaultAsync(p => p.Id == id);
 
             return playlist!.Musics;
-        } 
+        }
+
+        public async Task<List<PlayList>> GetPlayListsByUserId(int userId)
+        {
+            return await _context.PlayLists.Where(p => p.UserId == userId).ToListAsync();
+        }
     }
 }

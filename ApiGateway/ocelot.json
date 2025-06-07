@@ -191,6 +191,18 @@
       ],
       "UpstreamPathTemplate": "/playlist/getMusicByList/{id}",
       "UpstreamHttpMethod": [ "GET" ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/PlayList/GetPlayListsByUserId/{Id}",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 7077
+        }
+      ],
+      "UpstreamPathTemplate": "/playlist/getPlayListByUser/{Id}",
+      "UpstreamHttpMethod": [ "GET" ]
     }
   ],
   "GlobalConfiguration": {

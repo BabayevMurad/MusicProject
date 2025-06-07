@@ -80,5 +80,11 @@ namespace MusicApi.Controllers
         {
             return await _playList.GetMusicsByPlayList(id);
         }
+
+        [HttpGet("GetPlayListsByUserId/{Id}")]
+        public async Task<List<PlayList>> GetPlayListsByUserId(int Id)
+        {
+            return await _playList.GetPlayListsByUserId(Id);
+        }
     }
 }
