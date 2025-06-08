@@ -205,7 +205,7 @@
       "UpstreamHttpMethod": [ "GET" ]
     },
     {
-      "DownstreamPathTemplate": "/api/Music/Upload",
+      "DownstreamPathTemplate": "/api/Upload",
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
