@@ -10,6 +10,6 @@ namespace MusicApi.Services
         Task<Music> GetMusic(int id);
         Task<List<Music>> GetMusicList();
         Task<bool> LikeMusic(int id, int userId);
-        //Task<bool> UnLikeMusic(int id, int userId);
+        Task<bool> UnlikeMusic(int musicId, int userId);
     }
 }

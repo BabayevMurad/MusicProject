@@ -48,40 +48,8 @@ namespace MusicApi.Services
             await _context.SaveChangesAsync();
         }
 
-        //public async Task<bool> LikeMusic(int id, int userId)
-        //{
-        //    var music = await _context.Musics.Include(m => m.Like).FirstOrDefaultAsync(m => m.Id == id);
-
-        //    var user = await _context.Users.FirstOrDefaultAsync(u => u.Id == userId);
-
-        //    var like = await _context.Likes.FirstOrDefaultAsync(l => l.Id == music.LikeId);
-
-        //    var users = like.Users;
-
-        //    foreach (var u in users)
-        //    {
-        //        if (u.Id == userId)
-        //        {
-        //            return false;
-        //        }
-        //    }
-
-        //    users.Add(user);
-
-        //    like.LikeCount = users.Count;
-
-        //    await _context.SaveChangesAsync();
-
-        //    music.Like = like;
-
-        //    await _context.SaveChangesAsync();
-
-        //    return true;
-        //}
-
         public async Task<bool> LikeMusic(int id, int userId)
         {
-            // Get the music with Like navigation property
             var music = await _context.Musics
                 .Include(m => m.Like)
                 .ThenInclude(l => l.Users)
@@ -141,20 +109,37 @@ namespace MusicApi.Services
             return await _context.Musics.ToListAsync();
         }
 
-        //public async Task UnLikeMusic(int id)
-        //{
-        //    var music = await _context.Musics.FirstOrDefaultAsync(m => m.Id == id);
+        public async Task<bool> UnlikeMusic(int musicId, int userId)
+        {
+            var music = await _context.Musics
+                .Include(m => m.Like)
+                .ThenInclude(l => l!.Users)
+                .FirstOrDefaultAsync(m => m.Id == musicId);
 
-        //    if (music.LikeCount!=0)
-        //    {
-        //        music!.LikeCount = music.LikeCount - 1;
-        //    }
-        //    else
-        //    {
-        //        music!.LikeCount = 0;
-        //    }
+            if (music == null)
+                throw new Exception("Music not found.");
 
-        //    await _context.SaveChangesAsync();
-        //}
+            if (music.Like == null)
+                throw new Exception("Like entity is missing for this music.");
+
+            var user = await _context.Users.FirstOrDefaultAsync(u => u.Id == userId);
+            if (user == null)
+                throw new Exception("User not found.");
+
+            var like = music.Like;
+
+            if (like.Users == null || !like.Users.Any(u => u.Id == userId))
+                return false;
+
+            var userToRemove = like.Users.FirstOrDefault(u => u.Id == userId);
+            like.Users.Remove(userToRemove);
+
+            like.LikeCount = like.Users.Count;
+
+            await _context.SaveChangesAsync();
+
+            return true;
+        }
+
     }
 }

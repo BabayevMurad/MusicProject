@@ -73,7 +73,7 @@
       "UpstreamHttpMethod": [ "DELETE" ]
     },
     {
-      "DownstreamPathTemplate": "/api/Music/LikeMusic/{id}",
+      "DownstreamPathTemplate": "/api/Music/LikeMusic/{id}/{userId}",
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
@@ -81,11 +81,11 @@
           "Port": 7077
         }
       ],
-      "UpstreamPathTemplate": "/music/like/{id}",
+      "UpstreamPathTemplate": "/music/like/{id}/{userId}",
       "UpstreamHttpMethod": [ "POST" ]
     },
     {
-      "DownstreamPathTemplate": "/api/Music/UnLikeMusic/{id}",
+      "DownstreamPathTemplate": "/api/Music/UnLikeMusic/{id}/{userId}",
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
@@ -93,7 +93,7 @@
           "Port": 7077
         }
       ],
-      "UpstreamPathTemplate": "/music/unlike/{id}",
+      "UpstreamPathTemplate": "/music/unlike/{id}/{userId}",
       "UpstreamHttpMethod": [ "POST" ]
     },
     {

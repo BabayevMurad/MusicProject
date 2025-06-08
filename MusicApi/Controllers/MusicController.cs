@@ -54,11 +54,18 @@ namespace MusicApi.Controllers
             return Ok(new { message = "Music liked successfully." });
         }
 
-        //[HttpPost("UnLikeMusic/{id}")]
-        //public async Task UnLikeMusic(int id)
-        //{
-        //    await _musicService.UnLikeMusic(id);
-        //}
+        [HttpPost("UnLikeMusic/{id}/{userId}")]
+        public async Task<ActionResult> UnLikeMusic(int id, int userId)
+        {
+            var @bool = await _musicService.UnlikeMusic(id, userId);
+
+            if (!@bool)
+            {
+                return NotFound(new { message = "Music not found or already Unliked." });
+            }
+
+            return Ok(new { message = "Music Unliked successfully." });
+        }
 
         //{
         //  "name": "Chill Pop Motivational",
