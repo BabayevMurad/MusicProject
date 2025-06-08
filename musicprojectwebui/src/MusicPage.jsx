@@ -12,10 +12,14 @@ const fixUrl = (url) => {
  
 function MusicPage() {
   const [musics, setMusics] = useState([]);
+  const [playlists, setPlaylists] = useState([]);
+  const [selectedMusicId, setSelectedMusicId] = useState(null);
+  const [showDropdown, setShowDropdown] = useState(false);
   const [likeCounts, setLikeCounts] = useState({});
   const [userLikes, setUserLikes] = useState({});
-  const userId = localStorage.getItem("user_id") || "guest";
+  const [newPlaylistName, setNewPlaylistName] = useState("");
  
+  const userId = localStorage.getItem("user_id") || "guest";
   const likeCountsStorageKey = "likeCounts";
   const userLikesStorageKey = "userLikes";
  
@@ -34,9 +38,14 @@ function MusicPage() {
     setLikeCounts(counts);
   };
  
+  const fetchPlaylists = async () => {
+    const res = await axios.get("https://localhost:7243/playlist/list");
+    setPlaylists(res.data);
+  };
+ 
   useEffect(() => {
     fetchMusics();
- 
+    fetchPlaylists();
     const storedLikes = JSON.parse(localStorage.getItem(userLikesStorageKey)) || {};
     setUserLikes(storedLikes);
   }, []);
@@ -68,6 +77,33 @@ function MusicPage() {
       localStorage.setItem(userLikesStorageKey, JSON.stringify(updatedUserLikes));
     } catch {
       alert("Xəta baş verdi.");
+    }
+  };
+ 
+  const handleAddToPlaylist = async (playlistId) => {
+    if (!selectedMusicId) return;
+    await axios.post("https://localhost:7243/playlist/addMusic", {
+      playlistId,
+      musicId: selectedMusicId,
+    });
+    alert("Musiqi əlavə olundu!");
+    setShowDropdown(false);
+    setSelectedMusicId(null);
+  };
+ 
+  const handleCreatePlaylist = async () => {
+    if (!newPlaylistName.trim()) return alert("Playlist adı boş ola bilməz");
+ 
+    try {
+      await axios.post("https://localhost:7243/playlist/add", {
+        name: newPlaylistName,
+        userId,
+      });
+      setNewPlaylistName("");
+      fetchPlaylists();
+      alert("Yeni playlist yaradıldı!");
+    } catch {
+      alert("Playlist yaradılarkən xəta baş verdi.");
     }
   };
  
@@ -110,14 +146,65 @@ function MusicPage() {
 <span className="text-sm text-gray-600">
                   {likeCounts[music.id] || 0} like
 </span>
+ 
+                <button
+                  onClick={() => {
+                    setSelectedMusicId(music.id);
+                    setShowDropdown(true);
+                  }}
+                  className="ml-auto bg-indigo-600 text-white px-4 py-1 rounded hover:bg-indigo-700 text-sm"
+>
+                  ➕ Add
+</button>
 </div>
+ 
+              {showDropdown && selectedMusicId === music.id && (
+<div className="mt-3 border p-3 rounded shadow bg-white relative z-10">
+<button
+                    onClick={() => setShowDropdown(false)}
+                    className="absolute top-1 right-2 text-red-600 text-lg font-bold hover:text-red-800"
+                    title="Bağla"
+>
+                    ✖
+</button>
+ 
+                  <p className="font-semibold mb-2">Playlist seç:</p>
+<ul className="space-y-1 mt-1 mb-4">
+                    {playlists.map((p) => (
+<li key={p.id}>
+<button
+                          onClick={() => handleAddToPlaylist(p.id)}
+                          className="text-blue-600 hover:underline"
+>
+                          {p.name}
+</button>
+</li>
+                    ))}
+</ul>
+ 
+                  <div className="mt-4">
+<input
+                      type="text"
+                      placeholder="Yeni playlist adı"
+                      value={newPlaylistName}
+                      onChange={(e) => setNewPlaylistName(e.target.value)}
+                      className="border p-1 rounded w-full mb-2"
+                    />
+<button
+                      onClick={handleCreatePlaylist}
+                      className="w-full bg-green-600 text-white py-1 rounded hover:bg-green-700 text-sm"
+>
+                      ➕ Yeni Playlist Yarat
+</button>
+</div>
+</div>
+              )}
 </div>
           ))}
 </div>
       )}
  
-      {/* Upload formu alt hissədə */}
-<Upload onUploadSuccess={fetchMusics} />
+      <Upload onUploadSuccess={fetchMusics} />
 </div>
   );
 }
