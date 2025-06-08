@@ -9,7 +9,7 @@ namespace MusicApi.Services
         Task DeleteMusicAsync(int id);
         Task<Music> GetMusic(int id);
         Task<List<Music>> GetMusicList();
-        Task LikeMusic(int id);
-        Task UnLikeMusic(int id);
+        Task<bool> LikeMusic(int id, int userId);
+        //Task<bool> UnLikeMusic(int id, int userId);
     }
 }

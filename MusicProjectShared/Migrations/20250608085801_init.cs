@@ -11,6 +11,20 @@ namespace MusicProjectShared.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
+                name: "Likes",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    LikeCount = table.Column<int>(type: "int", nullable: false),
+                    MusicId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Likes", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Users",
                 columns: table => new
                 {
@@ -35,11 +49,18 @@ namespace MusicProjectShared.Migrations
                     PosterUrl = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     MusicUrl = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     UserId = table.Column<int>(type: "int", nullable: false),
-                    LikeCount = table.Column<int>(type: "int", nullable: false)
+                    LikeCount = table.Column<int>(type: "int", nullable: false),
+                    LikeId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Musics", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Musics_Likes_LikeId",
+                        column: x => x.LikeId,
+                        principalTable: "Likes",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Musics_Users_UserId",
                         column: x => x.UserId,
@@ -62,6 +83,30 @@ namespace MusicProjectShared.Migrations
                     table.PrimaryKey("PK_PlayLists", x => x.Id);
                     table.ForeignKey(
                         name: "FK_PlayLists_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "UserLikes",
+                columns: table => new
+                {
+                    UserId = table.Column<int>(type: "int", nullable: false),
+                    LikeId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_UserLikes", x => new { x.UserId, x.LikeId });
+                    table.ForeignKey(
+                        name: "FK_UserLikes_Likes_LikeId",
+                        column: x => x.LikeId,
+                        principalTable: "Likes",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_UserLikes_Users_UserId",
                         column: x => x.UserId,
                         principalTable: "Users",
                         principalColumn: "Id",
@@ -93,6 +138,12 @@ namespace MusicProjectShared.Migrations
                 });
 
             migrationBuilder.CreateIndex(
+                name: "IX_Musics_LikeId",
+                table: "Musics",
+                column: "LikeId",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Musics_UserId",
                 table: "Musics",
                 column: "UserId");
@@ -106,6 +157,11 @@ namespace MusicProjectShared.Migrations
                 name: "IX_PlayLists_UserId",
                 table: "PlayLists",
                 column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_UserLikes_LikeId",
+                table: "UserLikes",
+                column: "LikeId");
         }
 
         /// <inheritdoc />
@@ -115,10 +171,16 @@ namespace MusicProjectShared.Migrations
                 name: "PlayListMusics");
 
             migrationBuilder.DropTable(
+                name: "UserLikes");
+
+            migrationBuilder.DropTable(
                 name: "Musics");
 
             migrationBuilder.DropTable(
                 name: "PlayLists");
+
+            migrationBuilder.DropTable(
+                name: "Likes");
 
             migrationBuilder.DropTable(
                 name: "Users");

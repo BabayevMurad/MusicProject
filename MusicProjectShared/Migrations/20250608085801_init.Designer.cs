@@ -11,7 +11,7 @@ using MusicProjectShared.Data;
 namespace MusicProjectShared.Migrations
 {
     [DbContext(typeof(MusicDbContext))]
-    [Migration("20250607215340_init")]
+    [Migration("20250608085801_init")]
     partial class init
     {
         /// <inheritdoc />
@@ -24,6 +24,25 @@ namespace MusicProjectShared.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.Entity("MusicProjectShared.Entities.Like", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("LikeCount")
+                        .HasColumnType("int");
+
+                    b.Property<int>("MusicId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Likes");
+                });
+
             modelBuilder.Entity("MusicProjectShared.Entities.Music", b =>
                 {
                     b.Property<int>("Id")
@@ -33,6 +52,9 @@ namespace MusicProjectShared.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<int>("LikeCount")
+                        .HasColumnType("int");
+
+                    b.Property<int>("LikeId")
                         .HasColumnType("int");
 
                     b.Property<string>("MusicUrl")
@@ -51,6 +73,9 @@ namespace MusicProjectShared.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("LikeId")
+                        .IsUnique();
 
                     b.HasIndex("UserId");
 
@@ -117,13 +142,36 @@ namespace MusicProjectShared.Migrations
                     b.ToTable("PlayListMusics", (string)null);
                 });
 
+            modelBuilder.Entity("UserLikes", b =>
+                {
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("LikeId")
+                        .HasColumnType("int");
+
+                    b.HasKey("UserId", "LikeId");
+
+                    b.HasIndex("LikeId");
+
+                    b.ToTable("UserLikes", (string)null);
+                });
+
             modelBuilder.Entity("MusicProjectShared.Entities.Music", b =>
                 {
+                    b.HasOne("MusicProjectShared.Entities.Like", "Like")
+                        .WithOne("Music")
+                        .HasForeignKey("MusicProjectShared.Entities.Music", "LikeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("MusicProjectShared.Entities.User", "User")
                         .WithMany("Musics")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Like");
 
                     b.Navigation("User");
                 });
@@ -154,6 +202,26 @@ namespace MusicProjectShared.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
                         .HasConstraintName("FK_PlayListMusics_PlayList_PlayListId");
+                });
+
+            modelBuilder.Entity("UserLikes", b =>
+                {
+                    b.HasOne("MusicProjectShared.Entities.Like", null)
+                        .WithMany()
+                        .HasForeignKey("LikeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("MusicProjectShared.Entities.User", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("MusicProjectShared.Entities.Like", b =>
+                {
+                    b.Navigation("Music");
                 });
 
             modelBuilder.Entity("MusicProjectShared.Entities.User", b =>

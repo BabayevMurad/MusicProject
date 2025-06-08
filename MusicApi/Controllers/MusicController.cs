@@ -3,8 +3,6 @@ using MusicApi.Services;
 using MusicProjectShared.Entities;
 using MusicProjectShared.Entities.Dto_s;
 
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-
 namespace MusicApi.Controllers
 {
     [Route("api/[controller]")]
@@ -43,16 +41,37 @@ namespace MusicApi.Controllers
             await _musicService.DeleteMusicAsync(id);
         }
 
-        [HttpPost("LikeMusic/{id}")]
-        public async Task LikeMusic(int id)
+        [HttpPost("LikeMusic/{id}/{userId}")]
+        public async Task<ActionResult> LikeMusic(int id, int userId)
         {
-            await _musicService.LikeMusic(id);
+            var @bool =await _musicService.LikeMusic(id, userId);
+
+            if (!@bool)
+            {
+                return NotFound(new { message = "Music not found or already liked." });
+            }
+
+            return Ok(new { message = "Music liked successfully." });
         }
 
-        [HttpPost("UnLikeMusic/{id}")]
-        public async Task UnLikeMusic(int id)
-        {
-            await _musicService.UnLikeMusic(id);
-        }
+        //[HttpPost("UnLikeMusic/{id}")]
+        //public async Task UnLikeMusic(int id)
+        //{
+        //    await _musicService.UnLikeMusic(id);
+        //}
+
+        //{
+        //  "name": "Chill Pop Motivational",
+        //  "posterUrl": "/Uploads/12-35-32-759_200x200.jpg",
+        //  "musicUrl": "/Uploads/chill-pop-motivational-upbeat-250525.mp3",
+        //  "userId": 1
+        //}
+
+        //{
+        //  "name": "Eona Emotional Ambient Pop",
+        //  "posterUrl": "/Uploads/18-04-45-226_200x200.jpg",
+        //  "musicUrl": "/Uploads/eona-emotional-ambient-pop-351436.mp3",
+        //  "userId": 2
+        //}
     }
 }
