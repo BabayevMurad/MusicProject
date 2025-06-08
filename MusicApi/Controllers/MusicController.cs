@@ -17,7 +17,7 @@ namespace MusicApi.Controllers
             _musicService = musicService;
         }
 
-        [HttpGet("GetMusicList")]
+        [HttpGet("GetMusicList")]   
         public async Task<List<Music>> GetMusicList()
         {
             return await _musicService.GetMusicList();
@@ -44,27 +44,17 @@ namespace MusicApi.Controllers
         [HttpPost("LikeMusic/{id}/{userId}")]
         public async Task<ActionResult> LikeMusic(int id, int userId)
         {
-            var @bool =await _musicService.LikeMusic(id, userId);
+            var count =await _musicService.LikeMusic(id, userId);
 
-            if (!@bool)
-            {
-                return NotFound(new { message = "Music not found or already liked." });
-            }
-
-            return Ok(new { message = "Music liked successfully." });
+            return Ok(new { likeCount = count });
         }
 
         [HttpPost("UnLikeMusic/{id}/{userId}")]
         public async Task<ActionResult> UnLikeMusic(int id, int userId)
         {
-            var @bool = await _musicService.UnlikeMusic(id, userId);
+            var count = await _musicService.UnlikeMusic(id, userId);
 
-            if (!@bool)
-            {
-                return NotFound(new { message = "Music not found or already Unliked." });
-            }
-
-            return Ok(new { message = "Music Unliked successfully." });
+            return Ok(new { likeCount = count });
         }
 
         //{

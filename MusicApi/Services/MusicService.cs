@@ -48,7 +48,7 @@ namespace MusicApi.Services
             await _context.SaveChangesAsync();
         }
 
-        public async Task<bool> LikeMusic(int id, int userId)
+        public async Task<int> LikeMusic(int id, int userId)
         {
             var music = await _context.Musics
                 .Include(m => m.Like)
@@ -68,7 +68,7 @@ namespace MusicApi.Services
                 throw new Exception("User not found.");
 
             if (like.Users?.Any(u => u.Id == userId) == true)
-                return false;
+                return -1;
 
             like.Users ??= new List<User>();
             like.Users.Add(user);
@@ -79,7 +79,7 @@ namespace MusicApi.Services
 
             await _context.SaveChangesAsync();
 
-            return true;
+            return music.LikeCount;
         }
 
 
@@ -109,7 +109,7 @@ namespace MusicApi.Services
             return await _context.Musics.ToListAsync();
         }
 
-        public async Task<bool> UnlikeMusic(int musicId, int userId)
+        public async Task<int> UnlikeMusic(int musicId, int userId)
         {
             var music = await _context.Musics
                 .Include(m => m.Like)
@@ -129,7 +129,7 @@ namespace MusicApi.Services
             var like = music.Like;
 
             if (like.Users == null || !like.Users.Any(u => u.Id == userId))
-                return false;
+                return -1;
 
             var userToRemove = like.Users.FirstOrDefault(u => u.Id == userId);
             like.Users.Remove(userToRemove);
@@ -138,7 +138,7 @@ namespace MusicApi.Services
 
             await _context.SaveChangesAsync();
 
-            return true;
+            return like.LikeCount;
         }
 
     }

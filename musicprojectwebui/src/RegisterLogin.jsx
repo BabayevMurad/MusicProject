@@ -100,7 +100,7 @@ const handleLogin = async () => {
 
     setTimeout(() => {
       setShowSuccess(false);
-      window.location.href = "/musisapp";
+      window.location.href = "/musicapp";
     }, 1000);
   } catch (err) {
     setShowLoginError(true);
